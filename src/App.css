@@ -1,38 +1,162 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&display=swap');
+
+/*초기화*/
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Gaegu', cursive;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.book{
+  display: flex;
+  position: relative;
+  align-items: center;  
+  perspective: 850px;
+  z-index: 7;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/*페이지 디자인*/
+.backPage,
+.countpage,
+.firstpage,
+.lastpage,
+.page{
+  position:absolute;
+  width: 250px;
+  height: 280px;
+  background-color: #f5f2e4;
+  border-radius: 2px 10px 10px 2px;
+  transform: rotateX(20deg);
+}
+.countpage{
+  justify-content:center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/*커버 디자인*/
+.backCover,
+.firstButton,
+.firstcover,
+.cover{
+  height: 300px;
+  width: 260px;
+  background: #353755;
+  border-radius: 2px 20px 20px 2px;
+  position: absolute;
+  transform: rotateX(20deg);
+  transform-origin: center left;
+  transition: all 3s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/*페이지 속 디자인*/
+label,
+h1{
+  text-align: center;
+  font-size: 18px;
   }
-  to {
-    transform: rotate(360deg);
+form{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form>img,
+form>.img{
+  border-radius: 50%;
+  height: 90px;
+  width: 90px;
+  margin: 0px 0px 20px 0;
+  
+}
+form>.img{
+  background-color: pink;
+}
+form>h1{
+  margin: 20px 0;
+  font-size: 21px;
+}
+.book input:first-child{
+  background-color: transparent;
+  color:white;
+  border-style: none;
+  border-bottom: white solid 2px;
+}
+.firstButton{
+  background-color: transparent;
+  border-style: none;
+}
+
+/*애니메이션과 보이는 순서조정*/
+
+.firstcover{
+  z-index: 4;
+}
+.firstpage{
+  transition: all 3s;
+  transform-origin:center left;
+  z-index: 3;
+}
+.lastpage{
+  transition: all 3s;
+  transform-origin:center left;
+  z-index: 2; 
+}
+.countpage{
+  z-index: 1;
+}
+@keyframes rotate {
+  0% {
+    z-index: 4;    
   }
+  51%{
+    z-index: inherit;
+    box-shadow: -5px 1px 8px gray;
+  }
+  100% {
+    z-index: 7;
+    transform: rotateX(20deg) rotateY(-180deg);
+    box-shadow: 1px 0px 6px gray;
+  }
+}
+
+.turn{
+  animation:rotate 2.5s 1 linear;
+  animation-fill-mode:both;
+}
+
+/*FRONT,BACK 페이지 설정*/
+.backCover,
+.frontPage,
+.backPage{
+  position: absolute;
+  width:100%;
+  height:100%;
+  backface-visibility: hidden;
+}
+
+.backCover,
+.backPage{
+  transform: rotateY(180deg);
+  border-radius: 10px 2px 2px 10px;
+}
+
+/*front,back둘이 맞물릴 수 있게*/
+.firstcover,
+.countpage,
+.firstpage,
+.lastpage{
+  transform-style: preserve-3d;
+}
+/*백커버까지 왼쪽으로 넘어가지 않게*/
+.backCover{
+  transform-origin: initial;
 }
